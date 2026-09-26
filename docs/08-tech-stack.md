@@ -66,8 +66,8 @@
 | `base.en` CTranslate2 | a few hundred MB | under ~1 GB |
 | App and browser | small | shared with the desktop |
 
-Set `HF_HOME` and `OLLAMA_MODELS` on `D:` before the first download.
+Whisper weights go to `<repo>/.models/hf` unless `HF_HOME` is set. Point `OLLAMA_MODELS` at `<repo>/.models/ollama` before `ollama pull`. See `docs/20-decisions-and-tradeoffs.md`.
 
 ## Not chosen
 
-Paid OpenAI, Gemini, ElevenLabs, cloud databases, authentication, Docker as a requirement, and GPU-only builds.
+Paid OpenAI, Gemini, ElevenLabs, cloud databases, authentication, Docker Compose as the setup path, and GPU-only builds.

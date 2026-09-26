@@ -2,7 +2,7 @@
 
 A private, local English speaking coach for one person. Open it, press start, talk. The app chooses what to practice and corrects one or two useful problems.
 
-Phase 2 is a static screen in `frontend/`. Later phases are not built yet. See [progress](docs/progress.md).
+Speech-to-text works. Conversation (Phase 5) is next. See [progress](docs/progress.md).
 
 ## Read first
 
@@ -23,9 +23,30 @@ Phase 2 is a static screen in `frontend/`. Later phases are not built yet. See [
 | Storage | SQLite |
 | Pronunciation scoring | Not in the MVP |
 
-The machine is a Windows 11 laptop with an Intel i7-9850H, 16 GB RAM, and Intel UHD Graphics 630. There is no NVIDIA GPU. Details and tradeoffs are in [research](docs/02-research.md) and [tech stack](docs/08-tech-stack.md).
+The stack was chosen on a Windows 11 laptop with an Intel i7-9850H, 16 GB RAM, and Intel UHD Graphics 630, and no NVIDIA GPU. Another Windows laptop can run the same programs. Speed follows that machine's CPU. Details are in [research](docs/02-research.md) and [tech stack](docs/08-tech-stack.md).
 
-## Run the UI
+## Another computer
+
+Clone this repo onto a drive with several gigabytes free. Git does not include the speech or language models. Docker Compose is not the setup path. The decision is in [decisions](docs/20-decisions-and-tradeoffs.md).
+
+On that laptop, install Python 3.14, Node.js, and the Ollama Windows app. Then:
+
+```text
+set OLLAMA_MODELS=%CD%\.models\ollama
+ollama pull qwen2.5:3b
+```
+
+Whisper downloads into `.models\hf` the first time the API starts. If a pull or import fails, use [troubleshooting](docs/19-troubleshooting.md).
+
+## Run
+
+API, from `backend` after `pip install -r requirements.txt`:
+
+```text
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+UI:
 
 ```text
 cd frontend
@@ -33,4 +54,4 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000/. Start and End do not call a server yet. The turn on the page is a sample. Stack details are in [tech stack](docs/08-tech-stack.md).
+Open http://localhost:3000/. The page sends microphone audio to the API and shows the transcript. The coach reply arrives in Phase 5, after Ollama is wired in.

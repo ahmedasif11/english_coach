@@ -34,7 +34,8 @@ Phase 4 is complete. The next implementation phase is Phase 5, basic conversatio
 - Short always-on rule in `.cursor/rules/project.mdc`
 - Next.js screen in `frontend/`: today's focus, Start and End, a sample turn until the first session. Start captures the microphone, silence ends the clip, and the page uploads the WAV to FastAPI. The You line shows the transcript. End or leaving the page releases the mic. Audio is not saved unless `COACH_SAVE_AUDIO` is set.
 - FastAPI in `backend/`: health, in-memory sessions, and `POST /api/sessions/{id}/turns` returning transcript only. Empty audio returns `I didn't catch that. Try again.`
-- faster-whisper `base.en` int8 on CPU, weights under `D:\Practice\.models\hf`
+- faster-whisper `base.en` int8 on CPU. Weights default to `<repo>/.models/hf` (on this PC, `D:\Practice\.models\hf`)
+- Setup for another Windows laptop is clone, then install Python, Node, and Ollama. Docker Compose is not the run path. See `docs/20-decisions-and-tradeoffs.md`.
 - FastAPI route tests with Whisper replaced by a fake
 
 ## What does not exist

@@ -4,10 +4,10 @@ Messages the UI should show are specified in `docs/07-lld.md`. This page is for 
 
 ## Ollama is not running
 
-Install Ollama from the official Windows installer, start the app, then pull the model onto `D:`:
+Install Ollama from the official Windows installer and start the app. Pull the model into the repo so another laptop is not tied to this PC's `D:` drive. From the repo root:
 
 ```text
-set OLLAMA_MODELS=D:\Practice\.models\ollama
+set OLLAMA_MODELS=%CD%\.models\ollama
 ollama pull qwen2.5:3b
 ```
 
@@ -21,13 +21,7 @@ Check `http://127.0.0.1:11434/api/tags` in the browser. The coach health route s
 
 Python on this machine is 3.14. If `faster-whisper` or `ctranslate2` has no working wheel, stop and switch `stt.py` to whisper.cpp. Do not install a random older Python until that fallback is also bad. Record the pip error in the decision log.
 
-Set the download directory before the first successful import:
-
-```text
-set HF_HOME=D:\Practice\.models\hf
-```
-
-`C:` had about 24 GB free on 2026-09-26. A cache on `C:` can fill the system disk.
+The API writes weights to `<repo>/.models/hf` unless `HF_HOME` is set. If the system drive is small, clone the repo onto a larger drive before the first run. On this PC, `C:` had about 24 GB free on 2026-09-26.
 
 ## First turn is very slow
 

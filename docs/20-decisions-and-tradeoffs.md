@@ -80,3 +80,11 @@ Format for new entries: decision, alternatives, reason, tradeoff, date.
 - **Alternatives:** Default user-profile caches on `C:`.
 - **Reason:** `C:` had 23.8 GB free. `D:` had 32.1 GB free and already holds the project.
 - **Tradeoff:** A new terminal must see those variables, or downloads land on `C:` anyway.
+- **Follow-up:** This was this PC's disk, not a requirement that every laptop has `D:`. See "Clone onto a roomy drive" below.
+
+## 2026-09-26 — Clone onto a roomy drive, no Docker Compose
+
+- **Decision:** Run the coach as the browser UI, FastAPI, and the Ollama app. To use another Windows laptop, clone the repo onto a drive with several gigabytes free and install Python, Node, and Ollama there. Whisper weights default to `<repo>/.models/hf`. Set `OLLAMA_MODELS` to `<repo>/.models/ollama` before `ollama pull`.
+- **Alternatives:** `docker compose up` to install packages and models.
+- **Reason:** The microphone and the speaking voice are browser APIs on the host. Compose cannot carry those. Git does not store the multi-gigabyte weights, so the first run on a laptop still downloads them. Docker Desktop adds a Linux VM and RAM the 3B model needs. This PC has no NVIDIA GPU to pass through. The API already writes Whisper files under the repo, so the path follows the clone.
+- **Tradeoff:** Each laptop installs Python, Node, and Ollama once, and downloads the models again. Copying `.models/` by hand is optional and is not the setup path.

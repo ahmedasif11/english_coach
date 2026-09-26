@@ -65,22 +65,23 @@ A correction is allowed when the turn has enough words and the same focus was no
 
 Development: the Next.js dev server proxies `/api` to FastAPI.
 
-Personal use: Next.js serves the UI and FastAPI serves the API. Ollama stays a separate process because that is how its app works.
+Personal use: Next.js serves the UI and FastAPI serves the API. Ollama stays a separate process because that is how its app works. Docker Compose is not the way to move this to another laptop. See `docs/20-decisions-and-tradeoffs.md`.
 
 ## Configuration
 
-Environment variables, with defaults that match this machine:
+Paths are relative to the repo. Clone the repo onto a drive that has room for the models. On this PC the repo is `D:\Practice`, so the default folder is already on `D:`.
 
-| Name | Default intent |
-| --- | --- |
-| `OLLAMA_HOST` | `http://127.0.0.1:11434` |
-| `COACH_LLM_MODEL` | `qwen2.5:3b` |
-| `COACH_STT_MODEL` | `base.en` |
-| `COACH_DB` | `data/coach.db` |
-| `HF_HOME` | a directory on `D:` |
-| `OLLAMA_MODELS` | a directory on `D:` |
-| `OLLAMA_MAX_LOADED_MODELS` | `1` |
-| `COACH_NUM_CTX` | `2048` |
+| Name | Default | Read by |
+| --- | --- | --- |
+| `HF_HOME` | `<repo>/.models/hf` | API now |
+| `COACH_WHISPER_MODEL` | `base.en` | API now |
+| `COACH_CPU_THREADS` | `6` | API now. Lower it on a smaller CPU. |
+| `COACH_OLLAMA_URL` | `http://127.0.0.1:11434` | API now, health check only |
+| `OLLAMA_MODELS` | set this to `<repo>/.models/ollama` before `ollama pull` | Ollama app, not the API |
+| `COACH_LLM_MODEL` | `qwen2.5:3b` | Phase 5 |
+| `COACH_DB` | `data/coach.db` | Phase 7 |
+| `OLLAMA_MAX_LOADED_MODELS` | `1` | Ollama app |
+| `COACH_NUM_CTX` | `2048` | Phase 5 |
 
 No settings page in the MVP.
 

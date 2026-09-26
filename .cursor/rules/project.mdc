@@ -13,7 +13,7 @@ Personal, local-first English speaking coach. Simplicity, speed, useful feedback
 - One LLM call per speaking turn. Keep replies short.
 - Do not invent pronunciation or proficiency percentages. Say when a measurement is approximate.
 - No paid APIs, accounts, or cloud storage in the core path.
-- Store model files on `D:` when a choice exists. `C:` has little free space.
+- Keep Whisper and Ollama weights under the repo `.models` folder, on the drive that has free space. Do not assume a `D:` drive.
 - Correct at most one or two problems per turn.
 
 ## Commits
