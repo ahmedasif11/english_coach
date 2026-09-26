@@ -3,7 +3,7 @@
 ## Shape
 
 ```text
-Browser (Vite + React)
+Browser (Next.js)
   capture 16 kHz mono PCM
   detect end of speech
   speak coach lines with speechSynthesis
@@ -29,7 +29,7 @@ The browser never calls Ollama directly. The API never calls a paid host.
 
 The browser already owns the microphone and a usable speaking voice. Python owns files, SQLite, and the speech model. Ollama owns model weights and GPU/CPU inference, so swapping `qwen2.5:3b` for another tag is a config change.
 
-Next.js, Electron, Redis, and a separate database server do not remove a real problem here.
+Electron, Redis, and a separate database server do not remove a real problem here. Next.js is only the UI. It does not own sessions, speech, or storage.
 
 ## Responsibilities
 
@@ -63,9 +63,9 @@ A correction is allowed when the turn has enough words and the same focus was no
 
 ## Process model
 
-Development: Vite dev server proxies `/api` to FastAPI.
+Development: the Next.js dev server proxies `/api` to FastAPI.
 
-Personal use: FastAPI serves the built UI and the API. Two terminals in development, one process in daily use. Ollama stays a separate process because that is how its app works.
+Personal use: Next.js serves the UI and FastAPI serves the API. Ollama stays a separate process because that is how its app works.
 
 ## Configuration
 

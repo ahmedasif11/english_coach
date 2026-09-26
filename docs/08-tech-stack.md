@@ -4,10 +4,10 @@
 
 ### Frontend
 
-- **Decision:** Vite, React, TypeScript.
-- **Alternatives:** Next.js, a single HTML file, Electron.
-- **Reason:** The UI is one screen with recording state. Vite is the smallest React setup that still types the API payloads. Next.js adds routing and server concepts this app does not use.
-- **Tradeoff:** A production run needs `npm run build` before FastAPI can serve `frontend/dist`.
+- **Decision:** Next.js (App Router) and TypeScript. FastAPI stays the API. There are no Next.js API routes.
+- **Alternatives:** Vite, a single HTML file, Electron.
+- **Reason:** The UI framework is Next.js. Next.js still renders with React, so the screen components are React components. The page does not call Ollama or own the learner profile.
+- **Tradeoff:** Larger than a one-screen Vite app. Daily use runs Next.js and FastAPI. `next dev` proxies `/api` to FastAPI on port 8000.
 
 ### Backend
 

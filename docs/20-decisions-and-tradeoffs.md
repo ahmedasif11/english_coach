@@ -57,6 +57,14 @@ Format for new entries: decision, alternatives, reason, tradeoff, date.
 - **Alternatives:** Next.js, Electron, a nested `english-coach/` folder.
 - **Reason:** One screen does not need Next.js. A nested root would hide `.cursor/skills/` from this workspace.
 - **Tradeoff:** Production needs a frontend build step.
+- **Superseded:** the UI choice only. See "Next.js for the UI" below. Skills stay at the workspace root.
+
+## 2026-09-26 — Next.js for the UI
+
+- **Decision:** Next.js App Router and TypeScript for the UI. FastAPI stays the only API. No Next.js API routes.
+- **Alternatives:** Keep Vite. A non-React UI such as plain HTML, Svelte, or Vue.
+- **Reason:** The UI framework should be Next.js. Next.js still uses React to render components, so the screen stays React components.
+- **Tradeoff:** A larger toolchain than Vite. Daily use runs Next.js and FastAPI, not one process. Next.js does not own sessions, speech, or storage.
 
 ## 2026-09-26 — Models on D:
 

@@ -2,7 +2,7 @@
 
 A private, local English speaking coach for one person. Open it, press start, talk. The app chooses what to practice and corrects one or two useful problems.
 
-This repository is in the design phase. Application code has not been started.
+Phase 2 is a static screen in `frontend/`. Later phases are not built yet. See [progress](docs/progress.md).
 
 ## Read first
 
@@ -15,7 +15,7 @@ This repository is in the design phase. Application code has not been started.
 
 | Piece | Choice |
 | --- | --- |
-| UI | Vite, React, TypeScript |
+| UI | Next.js, TypeScript |
 | API | Python, FastAPI |
 | Speech-to-text | faster-whisper `base.en`, CPU int8 |
 | Language model | Ollama `qwen2.5:3b` |
@@ -25,6 +25,12 @@ This repository is in the design phase. Application code has not been started.
 
 The machine is a Windows 11 laptop with an Intel i7-9850H, 16 GB RAM, and Intel UHD Graphics 630. There is no NVIDIA GPU. Details and tradeoffs are in [research](docs/02-research.md) and [tech stack](docs/08-tech-stack.md).
 
-## Run later
+## Run the UI
 
-Setup and run commands will be added when the app exists. Do not expect them to work yet.
+```text
+cd frontend
+npm install
+npm run dev
+```
+
+Open http://localhost:3000/. Start and End do not call a server yet. The turn on the page is a sample. Stack details are in [tech stack](docs/08-tech-stack.md).

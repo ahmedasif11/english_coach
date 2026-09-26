@@ -4,7 +4,7 @@ Last updated: 2026-09-26
 
 ## Current phase
 
-Phase 1 is complete. The next implementation phase is Phase 2, basic UI. Do not start it until asked.
+Phase 2 is complete. The next implementation phase is Phase 3, microphone capture. Do not start it until asked.
 
 ## Phase status
 
@@ -12,7 +12,7 @@ Phase 1 is complete. The next implementation phase is Phase 2, basic UI. Do not 
 | --- | --- | --- |
 | 0 | Research | Done |
 | 1 | Documentation, skills, architecture | Done |
-| 2 | Basic UI | Not started |
+| 2 | Basic UI | Done |
 | 3 | Microphone capture | Not started |
 | 4 | Speech-to-text | Not started |
 | 5 | Basic conversation | Not started |
@@ -32,10 +32,10 @@ Phase 1 is complete. The next implementation phase is Phase 2, basic UI. Do not 
 - Product, architecture, HLD, LLD, learning engine, speech, and data-model docs
 - Project skills under `.cursor/skills/`
 - Short always-on rule in `.cursor/rules/project.mdc`
+- Static Next.js screen in `frontend/`: today's focus, Start and End, one sample turn and correction. The buttons do not call a server.
 
 ## What does not exist
 
-- Frontend
 - Backend
 - Prompts on disk
 - Database

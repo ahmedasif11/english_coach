@@ -159,7 +159,7 @@ Log the exception on the server. Do not send the traceback to the page.
 
 | Module | Role |
 | --- | --- |
-| `frontend/src/App.tsx` | Layout and session state |
+| `frontend/src/app/page.tsx` | Layout and session state |
 | `frontend/src/api.ts` | `health`, `startSession`, `sendTurn`, `endSession` |
 | `frontend/src/audio/recorder.ts` | Worklet, WAV encode, silence stop |
 | `frontend/src/audio/speak.ts` | `speechSynthesis`, cancel on new turn |

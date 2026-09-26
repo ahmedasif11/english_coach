@@ -130,7 +130,7 @@ Target Edge or Chrome on this PC. Required APIs: `getUserMedia`, `AudioWorklet`,
 | Shape | Decision |
 | --- | --- |
 | Next.js plus FastAPI plus separate workers | Rejected. No SSR, no extra processes. |
-| Vite React plus FastAPI | Chosen. One UI, one Python API. |
+| Vite React plus FastAPI | First research pick. The UI is now Next.js. See `docs/20-decisions-and-tradeoffs.md`. |
 | Electron | Rejected. Heavier packaging for no MVP gain. A browser tab is enough. |
 | Browser-only, WebGPU models | Rejected. Two large models in the browser on a 16 GB iGPU laptop is the slower, riskier path. |
 | JSON file storage | Rejected as the main store. Session history and pattern counts are small relational updates. |
