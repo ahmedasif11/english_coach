@@ -7,6 +7,9 @@ type SessionScreenProps = {
   correction: Correction | null;
   status: SpeakStatus;
   sessionStarted: boolean;
+  notice: string | null;
+  onStart: () => void;
+  onEnd: () => void;
 };
 
 const startLabels: Record<SpeakStatus, string> = {
@@ -22,17 +25,27 @@ export function SessionScreen({
   correction,
   status,
   sessionStarted,
+  notice,
+  onStart,
+  onEnd,
 }: SessionScreenProps) {
   return (
     <main className="app">
       <h1>English Coach</h1>
       <p className="focus">Today: {focusLabel}</p>
       <div className="controls">
-        <button type="button">{startLabels[status]}</button>
+        <button type="button" onClick={onStart} disabled={status !== "idle"}>
+          {startLabels[status]}
+        </button>
         {sessionStarted ? (
-          <button type="button" className="secondary">
+          <button type="button" className="secondary" onClick={onEnd}>
             End
           </button>
+        ) : null}
+        {notice ? (
+          <p className="notice" role="alert">
+            {notice}
+          </p>
         ) : null}
       </div>
       <section className="turn" aria-label="Latest turn">

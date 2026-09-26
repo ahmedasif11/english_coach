@@ -4,7 +4,7 @@ Last updated: 2026-09-26
 
 ## Current phase
 
-Phase 2 is complete. The next implementation phase is Phase 3, microphone capture. Do not start it until asked.
+Phase 3 is complete. The next implementation phase is Phase 4, speech-to-text. Do not start it until asked.
 
 ## Phase status
 
@@ -13,7 +13,7 @@ Phase 2 is complete. The next implementation phase is Phase 3, microphone captur
 | 0 | Research | Done |
 | 1 | Documentation, skills, architecture | Done |
 | 2 | Basic UI | Done |
-| 3 | Microphone capture | Not started |
+| 3 | Microphone capture | Done |
 | 4 | Speech-to-text | Not started |
 | 5 | Basic conversation | Not started |
 | 6 | Grammar analysis | Not started |
@@ -32,7 +32,7 @@ Phase 2 is complete. The next implementation phase is Phase 3, microphone captur
 - Product, architecture, HLD, LLD, learning engine, speech, and data-model docs
 - Project skills under `.cursor/skills/`
 - Short always-on rule in `.cursor/rules/project.mdc`
-- Static Next.js screen in `frontend/`: today's focus, Start and End, one sample turn and correction. The buttons do not call a server.
+- Next.js screen in `frontend/`: today's focus, Start and End, one sample turn and correction. Start captures the microphone locally, silence ends the clip, and the page shows `recorded Ns`. End or leaving the page releases the mic. Audio is not uploaded.
 
 ## What does not exist
 
