@@ -28,7 +28,7 @@
 - **Decision:** faster-whisper `base.en`, CPU, int8.
 - **Alternatives:** whisper.cpp, openai/whisper, Vosk, browser speech recognition.
 - **Reason:** Python integration, VAD, word timestamps, and CPU int8 performance. Browser recognition is not private in Chromium.
-- **Tradeoff:** Official Python 3.14 support was not released at research time. Phase 4 must install it first. If it fails, switch the `stt.py` backend to a whisper.cpp binary and keep the same transcript interface.
+- **Tradeoff:** Official Python 3.14 support was not released at research time. Phase 4 installed `faster-whisper` 1.2.1 on Python 3.14.3. whisper.cpp stays the unused fallback. See `docs/20-decisions-and-tradeoffs.md`.
 - **Second tradeoff:** Whisper rewrites many learner errors. See `docs/10-speech-pipeline.md`.
 
 ### Text-to-speech

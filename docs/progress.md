@@ -4,7 +4,7 @@ Last updated: 2026-09-26
 
 ## Current phase
 
-Phase 3 is complete. The next implementation phase is Phase 4, speech-to-text. Do not start it until asked.
+Phase 4 is complete. The next implementation phase is Phase 5, basic conversation. Do not start it until asked.
 
 ## Phase status
 
@@ -14,7 +14,7 @@ Phase 3 is complete. The next implementation phase is Phase 4, speech-to-text. D
 | 1 | Documentation, skills, architecture | Done |
 | 2 | Basic UI | Done |
 | 3 | Microphone capture | Done |
-| 4 | Speech-to-text | Not started |
+| 4 | Speech-to-text | Done |
 | 5 | Basic conversation | Not started |
 | 6 | Grammar analysis | Not started |
 | 7 | Learner profile | Not started |
@@ -32,22 +32,23 @@ Phase 3 is complete. The next implementation phase is Phase 4, speech-to-text. D
 - Product, architecture, HLD, LLD, learning engine, speech, and data-model docs
 - Project skills under `.cursor/skills/`
 - Short always-on rule in `.cursor/rules/project.mdc`
-- Next.js screen in `frontend/`: today's focus, Start and End, one sample turn and correction. Start captures the microphone locally, silence ends the clip, and the page shows `recorded Ns`. End or leaving the page releases the mic. Audio is not uploaded.
+- Next.js screen in `frontend/`: today's focus, Start and End, a sample turn until the first session. Start captures the microphone, silence ends the clip, and the page uploads the WAV to FastAPI. The You line shows the transcript. End or leaving the page releases the mic. Audio is not saved unless `COACH_SAVE_AUDIO` is set.
+- FastAPI in `backend/`: health, in-memory sessions, and `POST /api/sessions/{id}/turns` returning transcript only. Empty audio returns `I didn't catch that. Try again.`
+- faster-whisper `base.en` int8 on CPU, weights under `D:\Practice\.models\hf`
+- FastAPI route tests with Whisper replaced by a fake
 
 ## What does not exist
 
-- Backend
 - Prompts on disk
 - Database
-- Tests
+- Ollama conversation path
 - Installed Ollama model
-- Installed Whisper model
 
 ## Known risks to verify during implementation
 
-1. Python 3.14 may fail to install faster-whisper dependencies. Fallback is whisper.cpp. Verify in Phase 4 before building around an import that does not work.
+1. Python 3.14 installed `faster-whisper` 1.2.1 and `ctranslate2` 4.8.2. whisper.cpp is unused.
 2. `qwen2.5:3b` speed on this 2019 CPU is estimated, not measured. Measure in Phase 5 before considering a larger model.
-3. Whisper often rewrites learner grammar into correct English. Grammar coaching can only see errors that survive transcription.
+3. Whisper often rewrites learner grammar. On one local `I go there yesterday` clip, `base.en` kept `go`. Keep checking real microphone turns; do not assume every error survives.
 
 ## Update rule
 

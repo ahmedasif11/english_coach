@@ -15,7 +15,7 @@ type SessionScreenProps = {
 const startLabels: Record<SpeakStatus, string> = {
   idle: "Start speaking",
   listening: "Listening…",
-  working: "Working…",
+  working: "Transcribing…",
 };
 
 export function SessionScreen({

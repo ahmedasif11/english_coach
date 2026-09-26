@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ApiError, endSession, health, sendTurn, startSession } from "../api";
 import {
   isMicrophoneDenied,
   MicrophoneReleased,
@@ -11,6 +12,7 @@ import { SessionScreen } from "../components/SessionScreen";
 import type { Correction, SpeakStatus } from "../types";
 
 const MIC_DENIED = "Allow the microphone in the browser, then press Start.";
+const STT_LOADING = "The speech model is still downloading.";
 
 const sampleCorrection: Correction = {
   focus_id: "past_tense",
@@ -23,9 +25,13 @@ const sampleCorrection: Correction = {
 export default function Page() {
   const [status, setStatus] = useState<SpeakStatus>("idle");
   const [sessionStarted, setSessionStarted] = useState(false);
+  const [focusLabel, setFocusLabel] = useState("Past tense");
+  const [coachLine, setCoachLine] = useState("Tell me what you did yesterday.");
   const [transcript, setTranscript] = useState("I go there yesterday.");
+  const [correction, setCorrection] = useState<Correction | null>(sampleCorrection);
   const [notice, setNotice] = useState<string | null>(null);
   const micRef = useRef<Microphone | null>(null);
+  const sessionIdRef = useRef<string | null>(null);
   const busyRef = useRef(false);
   const generationRef = useRef(0);
 
@@ -35,6 +41,9 @@ export default function Page() {
       busyRef.current = false;
       micRef.current?.release();
       micRef.current = null;
+      const sessionId = sessionIdRef.current;
+      sessionIdRef.current = null;
+      if (sessionId) void endSession(sessionId).catch(() => undefined);
     };
     window.addEventListener("pagehide", release);
     return () => {
@@ -50,6 +59,26 @@ export default function Page() {
     setNotice(null);
 
     try {
+      const report = await health();
+      if (generation !== generationRef.current) return;
+      if (report.stt === "loading") {
+        setNotice(STT_LOADING);
+        return;
+      }
+      if (report.stt !== "ok") {
+        setNotice("Transcription failed. Try that sentence again.");
+        return;
+      }
+
+      if (!sessionIdRef.current) {
+        const created = await startSession();
+        if (generation !== generationRef.current) return;
+        sessionIdRef.current = created.id;
+        setFocusLabel(created.focus_label);
+        setCoachLine(created.question);
+        setCorrection(null);
+      }
+
       let mic = micRef.current;
       if (!mic) {
         mic = await openMicrophone();
@@ -64,14 +93,30 @@ export default function Page() {
       setStatus("listening");
       const clip = await mic.capture();
       if (generation !== generationRef.current) return;
-      setTranscript(`recorded ${clip.seconds}s`);
+
+      const sessionId = sessionIdRef.current;
+      if (!sessionId) throw new Error("Missing session");
+      setStatus("working");
+      const turn = await sendTurn(sessionId, clip.wav);
+      if (generation !== generationRef.current) return;
+      setTranscript(turn.transcript);
+      setCorrection(turn.correction);
+      setFocusLabel(turn.focus_label);
     } catch (error) {
       if (error instanceof MicrophoneReleased) return;
       if (generation !== generationRef.current) return;
-      micRef.current?.release();
-      micRef.current = null;
-      setSessionStarted(false);
-      if (isMicrophoneDenied(error)) setNotice(MIC_DENIED);
+      if (error instanceof ApiError) {
+        setNotice(error.message);
+        return;
+      }
+      if (isMicrophoneDenied(error)) {
+        micRef.current?.release();
+        micRef.current = null;
+        setSessionStarted(false);
+        setNotice(MIC_DENIED);
+        return;
+      }
+      setNotice("Transcription failed. Try that sentence again.");
     } finally {
       if (generation === generationRef.current) {
         busyRef.current = false;
@@ -85,6 +130,9 @@ export default function Page() {
     busyRef.current = false;
     micRef.current?.release();
     micRef.current = null;
+    const sessionId = sessionIdRef.current;
+    sessionIdRef.current = null;
+    if (sessionId) void endSession(sessionId).catch(() => undefined);
     setSessionStarted(false);
     setStatus("idle");
     setNotice(null);
@@ -92,10 +140,10 @@ export default function Page() {
 
   return (
     <SessionScreen
-      focusLabel="Past tense"
-      coachLine="Tell me what you did yesterday."
+      focusLabel={focusLabel}
+      coachLine={coachLine}
       transcript={transcript}
-      correction={sampleCorrection}
+      correction={correction}
       status={status}
       sessionStarted={sessionStarted}
       notice={notice}

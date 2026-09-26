@@ -15,6 +15,14 @@ Format for new entries: decision, alternatives, reason, tradeoff, date.
 - **Alternatives:** Browser speech recognition, Vosk, original Whisper, starting on whisper.cpp immediately.
 - **Reason:** Word timestamps and a Python API keep the first design smaller. Browser recognition on Chromium is a cloud service.
 - **Tradeoff:** Install risk on Python 3.14. Whisper also rewrites learner grammar, so coaching is incomplete by nature.
+- **Follow-up:** Python 3.14.3 installed `faster-whisper` 1.2.1 with `ctranslate2` 4.8.2 (`cp314` wheels). whisper.cpp was not needed.
+
+## 2026-09-26 — Honesty check kept go
+
+- **Decision:** Stay on `base.en`. Do not switch to `tiny.en` or `small.en` from this check.
+- **Alternatives:** Try `tiny.en` / `small.en` if `base.en` rewrote `go`.
+- **Reason:** A local spoken clip of "I go there yesterday" transcribed as `I go there yesterday.` STT took about 1.5 s.
+- **Tradeoff:** One clip is not a study. Live microphone turns can still be rewritten. Correct only text that is in the transcript.
 
 ## 2026-09-26 — Browser speech synthesis
 
