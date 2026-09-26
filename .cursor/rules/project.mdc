@@ -1,0 +1,31 @@
+---
+description: Persistent constraints for the personal English coach
+alwaysApply: true
+---
+
+# English Coach
+
+Personal, local-first English speaking coach. Simplicity, speed, useful feedback, and privacy outrank features.
+
+- Stay on the current phase in `docs/progress.md`. Do not implement later phases early.
+- Use one relevant skill from `.cursor/skills/`. Load only the docs that skill lists.
+- Application logic owns session state, learner profile, focus, topics, and measurements. The LLM only converses, corrects, and writes exercises.
+- One LLM call per speaking turn. Keep replies short.
+- Do not invent pronunciation or proficiency percentages. Say when a measurement is approximate.
+- No paid APIs, accounts, or cloud storage in the core path.
+- Store model files on `D:` when a choice exists. `C:` has little free space.
+- Correct at most one or two problems per turn.
+
+## Commits
+
+Use a Conventional Commit subject: `type: why this change exists`.
+
+- `feat` — someone can use a new behavior
+- `fix` — a broken behavior works again
+- `docs` — documentation only
+- `test` — tests
+- `refactor` — structure change with the same behavior
+- `perf` — a measured speed or memory improvement
+- `chore` — skills, tooling, or repo maintenance
+
+Keep one phase or one fix in each commit. Do not mix unrelated work.
